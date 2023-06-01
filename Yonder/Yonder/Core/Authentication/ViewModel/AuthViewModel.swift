@@ -66,8 +66,29 @@ class AuthViewModel: ObservableObject{
     }
     
     func deleteAccount() {
+        guard let currentUser = Auth.auth().currentUser else { return }
         
+        // Delete user document from Firestore
+        Firestore.firestore().collection("users").document(currentUser.uid).delete { error in
+            if let error = error {
+                print("DEBUG: Failed to delete user data from Firestore with error \(error.localizedDescription)")
+            } else {
+                // User data deletion successful
+                
+                // Delete user account and authentication credentials
+                currentUser.delete { error in
+                    if let error = error {
+                        print("DEBUG: Failed to delete user account with error \(error.localizedDescription)")
+                    } else {
+                        // User deletion successful
+                        self.userSession = nil
+                        self.currentUser = nil
+                    }
+                }
+            }
+        }
     }
+
     
     //in this function we want to reach out to firebase find the user id and get all the information stored in the databases so we can display it on the screen
     func fetchUser() async{
