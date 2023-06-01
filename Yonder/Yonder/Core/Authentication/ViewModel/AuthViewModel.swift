@@ -78,7 +78,7 @@ class AuthViewModel: ObservableObject{
                 // Delete user account and authentication credentials
                 currentUser.delete { error in
                     if let error = error {
-                        print("DEBUG: Failed to delete user account with error \(error.localizedDescription)")
+                        print("DEBUG: Failed to delete user with error \(error.localizedDescription)")
                     } else {
                         // User deletion successful
                         self.userSession = nil
