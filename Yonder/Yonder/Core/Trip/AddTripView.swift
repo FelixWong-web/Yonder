@@ -16,7 +16,7 @@ struct AddTripView: View {
     
     var body: some View {
         VStack{
-            Image("imageLogo")
+            Image("Olever")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 150, height:150)
@@ -30,7 +30,7 @@ struct AddTripView: View {
     
                 DatePicker("Arrival date", selection: $ArrivalDate, displayedComponents: [.date])
                 
-                DatePicker("Leaviing date", selection: $LeavingDate, displayedComponents: [.date])
+                DatePicker("Leaving date", selection: $LeavingDate, displayedComponents: [.date])
                 
                 InputView(text: $ListOfActivities,
                           title: "What are you doing?",
