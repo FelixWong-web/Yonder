@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestoreSwift
 
 struct AddTripView: View {
     @State private var Trip = ""
@@ -16,7 +18,7 @@ struct AddTripView: View {
     
     var body: some View {
         VStack{
-            Image("Olever")
+            Image("imageLogo")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 150, height:150)
@@ -39,6 +41,23 @@ struct AddTripView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             Spacer()
+            
+            Button {
+                Task {
+                    try await saveFormData(trip: Trip, arrivalDate: ArrivalDate, leavingDate: LeavingDate)
+                }
+            } label: {
+                HStack{
+                    Text("Submit")
+                        .fontWeight(.semibold)
+                    Image(systemName: "arrow.right")
+                }
+                .foregroundColor(.white)
+                .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                .background(Color.blue)
+                .cornerRadius(8)
+                .padding(.horizontal)
+            }
         }
     }
 }
