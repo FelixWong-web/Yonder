@@ -62,6 +62,21 @@ struct AddTripView: View {
     }
 }
 
+extension AddTripView : AuthenticationFormProtocol{
+    var formIsValid: Bool {
+        return !Trip.isEmpty
+        && isDateValid(date: ArrivalDate)
+        && isDateValid(date: ArrivalDate)
+        && !ListOfActivities.isEmpty
+        && !ListOfFriends.isEmpty
+    }
+}
+
+private func isDateValid(date: Date) -> Bool {
+        let currentDate = Date()
+        return date >= currentDate
+    }
+
 struct AddTripView_Previews: PreviewProvider {
     static var previews: some View {
         AddTripView()

@@ -4,12 +4,11 @@
 //
 //  Created by Felix Wong on 2023-05-30.
 
-
-
 import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel: AuthViewModel
+    @State private var tripForms: [TripForm] = []
     var body: some View {
         if let user = viewModel.currentUser{
             NavigationStack{
@@ -35,25 +34,16 @@ struct ProfileView: View {
                             }
                         }
                     }
-                    
-                    Section(header: Text("Trips")) { // Specify the header for the section
-                        HStack {
-                            SettingsRowView(imageName: "airplane", title: "Europe", tintColor: Color(.systemGray))
-                            
-                            Spacer()
-                            
-                            Text("2022")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-
+                    Section(header: Text("Trips").background(Color.clear)) { // Specify the header for the section
+                        TripFormListView(tripForms: $tripForms)
+                        
                         NavigationLink {
                             AddTripView()
                                 .navigationBarBackButtonHidden(false)
                         } label: {
                             SettingsRowView(imageName: "plus.circle.fill", title: "Add Trip", tintColor: Color(.systemGreen))
                         }
-                        
+                        .navigationBarTitleDisplayMode(.inline)
                     }
                     
                     Section ("Account") {
