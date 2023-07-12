@@ -19,12 +19,16 @@ struct TripFormListView: View {
                 Text("No trip forms found")
                     .foregroundColor(.gray)
             } else {
-                ForEach(tripForms) { tripForm in
-                    NavigationLink(destination: TripView(tripForm: tripForm)) {
-                            Text(tripForm.tripName)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 32) { // Adjust the spacing as needed
+                        ForEach(tripForms) { tripForm in
+                            NavigationLink(destination: TripView(tripForm: tripForm)) {
+                                TripSidebarView(tripForm: tripForm)
+                            }
                         }
+                    }
+                    .padding(.horizontal, 16) // Adjust the horizontal padding as needed
                 }
-                .listStyle(PlainListStyle())
             }
         }
         .onAppear {
@@ -83,6 +87,24 @@ struct TripFormListView: View {
                 // Update tripForms property on the main thread
                 self.tripForms = fetchedTripForms
             }
+        }
+    }
+}
+
+struct TripSidebarView: View {
+    let tripForm: TripForm
+    
+    var body: some View {
+        VStack {
+            // Customize the sidebar view for each trip
+            Text(tripForm.tripName)
+                .font(.headline)
+                .foregroundColor(.primary)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(8)
+                .frame(height: 200)
         }
     }
 }
