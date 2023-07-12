@@ -98,13 +98,22 @@ struct TripSidebarView: View {
         VStack {
             // Customize the sidebar view for each trip
             Text(tripForm.tripName)
-                .font(.headline)
-                .foregroundColor(.primary)
+                .font(.title) // Adjust the font size as needed
+                .foregroundColor(.white) // Change the text color to your desired color
                 .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.gray.opacity(0.2))
+                .frame(width: 200, height: 250) // Adjust the width and height as needed
+                .background(Color.blue) // Change the background color to your desired color
                 .cornerRadius(8)
-                .frame(height: 200)
+            Text(getYearFromDate(tripForm.arrivalDate))
+                                .font(.subheadline) // Adjust the font size as needed
+                                .foregroundColor(.white)
+            
         }
+    }
+    
+    private func getYearFromDate(_ date: Date) -> String {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        return String(year)
     }
 }
