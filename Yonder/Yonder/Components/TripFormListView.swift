@@ -20,7 +20,9 @@ struct TripFormListView: View {
                     .foregroundColor(.gray)
             } else {
                 ForEach(tripForms) { tripForm in
-                    Text(tripForm.tripName)
+                    NavigationLink(destination: TripView(tripForm: tripForm)) {
+                            Text(tripForm.tripName)
+                        }
                 }
                 .listStyle(PlainListStyle())
             }
