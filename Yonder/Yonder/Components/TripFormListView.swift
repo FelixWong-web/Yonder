@@ -96,19 +96,39 @@ struct TripSidebarView: View {
     
     var body: some View {
         VStack {
-            // Customize the sidebar view for each trip
-            Text(tripForm.tripName)
-                .font(.title) // Adjust the font size as needed
-                .foregroundColor(.white) // Change the text color to your desired color
-                .padding()
-                .frame(width: 200, height: 250) // Adjust the width and height as needed
-                .background(Color.blue) // Change the background color to your desired color
-                .cornerRadius(8)
-            Text(getYearFromDate(tripForm.arrivalDate))
-                                .font(.subheadline) // Adjust the font size as needed
-                                .foregroundColor(.white)
+            Spacer()
             
+            // Customize the sidebar view for each trip
+            VStack(spacing: 8) {
+                Text(tripForm.tripName)
+                    .font(.title) // Adjust the font size as needed
+                    .foregroundColor(.white) // Change the text color to your desired color
+                
+                Text(getYearFromDate(tripForm.arrivalDate))
+                    .font(.subheadline) // Adjust the font size as needed
+                    .foregroundColor(.white)
+            }
+            .padding()
+            .frame(width: 280, height: 250) // Adjust the width and height as needed
+            .background(Color.teal) // Change the background color to your desired color
+            .cornerRadius(8)
+            
+            Spacer()
         }
+//        VStack {
+//            // Customize the sidebar view for each trip
+//            Text(tripForm.tripName)
+//                .font(.title) // Adjust the font size as needed
+//                .foregroundColor(.white) // Change the text color to your desired color
+//                .padding()
+//                .frame(width: 275, height: 250) // Adjust the width and height as needed
+//                .background(Color.blue) // Change the background color to your desired color
+//                .cornerRadius(8)
+//            Text(getYearFromDate(tripForm.arrivalDate))
+//                                .font(.subheadline) // Adjust the font size as needed
+//                                .foregroundColor(.white)
+//
+//        }
     }
     
     private func getYearFromDate(_ date: Date) -> String {
