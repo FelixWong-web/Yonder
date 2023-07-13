@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+import SwiftUI
 
 protocol AuthenticationFormProtocol {
     var formIsValid: Bool { get }
@@ -64,29 +65,134 @@ class AuthViewModel: ObservableObject{
             print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
         }
     }
-    
+
     func deleteAccount() {
         guard let currentUser = Auth.auth().currentUser else { return }
-        
-        // Delete user document from Firestore
-        Firestore.firestore().collection("users").document(currentUser.uid).delete { error in
-            if let error = error {
-                print("DEBUG: Failed to delete user data from Firestore with error \(error.localizedDescription)")
-            } else {
-                // User data deletion successful
-                
-                // Delete user account and authentication credentials
-                currentUser.delete { error in
-                    if let error = error {
-                        print("DEBUG: Failed to delete user with error \(error.localizedDescription)")
+
+        let alert = UIAlertController(title: "Confirm Account Deletion", message: "Are you sure you want to delete your account? This action is irreversible.", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "Enter your password"
+            textField.isSecureTextEntry = true
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let deleteAction = UIAlertAction(title: "Delete Account", style: .destructive) { [weak self] _ in
+            guard let password = alert.textFields?.first?.text else { return }
+
+            let credential = EmailAuthProvider.credential(withEmail: currentUser.email ?? "", password: password)
+            currentUser.reauthenticate(with: credential) { [weak self] _, error in
+                if let error = error {
+                    print("Error reauthenticating user: \(error.localizedDescription)")
+                    // Show error alert if password verification fails
+                    let errorAlert = UIAlertController(title: "Authentication Error", message: "Failed to reauthenticate user. Please try again.", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    DispatchQueue.main.async {
+                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                              let rootViewController = windowScene.windows.first?.rootViewController else {
+                            return
+                        }
+                        rootViewController.present(errorAlert, animated: true, completion: nil)
+                    }
+                    return
+                }
+
+                let userId = currentUser.uid
+
+                // Delete all trip forms associated with the user
+                self?.deleteTripFormsForUser(userId: userId) { success in
+                    if success {
+                        // Trip forms deletion successful
+
+                        // Delete user document from Firestore
+                        Firestore.firestore().collection("users").document(userId).delete { error in
+                            if let error = error {
+                                print("DEBUG: Failed to delete user data from Firestore with error \(error.localizedDescription)")
+                            } else {
+                                // User data deletion successful
+
+                                // Delete user account and authentication credentials
+                                currentUser.delete { error in
+                                    if let error = error {
+                                        print("DEBUG: Failed to delete user with error \(error.localizedDescription)")
+                                    } else {
+                                        // User deletion successful
+                                        self?.userSession = nil
+                                        self?.currentUser = nil
+
+                                        // Reset the navigation stack and navigate to the login view
+                                        DispatchQueue.main.async {
+                                            self?.resetNavigationStackToLoginView()
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     } else {
-                        // User deletion successful
-                        self.userSession = nil
-                        self.currentUser = nil
+                        // Trip forms deletion failed
+                        print("DEBUG: Failed to delete trip forms associated with the user.")
                     }
                 }
             }
         }
+
+        alert.addAction(cancelAction)
+        alert.addAction(deleteAction)
+
+        // Present the confirmation alert
+        DispatchQueue.main.async {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let rootViewController = windowScene.windows.first?.rootViewController else {
+                return
+            }
+            rootViewController.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    private func deleteTripFormsForUser(userId: String, completion: @escaping (Bool) -> Void) {
+        let db = Firestore.firestore()
+        let tripFormsRef = db.collection("tripForms").whereField("userId", isEqualTo: userId)
+
+        tripFormsRef.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching trip forms for deletion: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+
+            guard let documents = snapshot?.documents else {
+                // No trip forms found, skip deletion
+                completion(true)
+                return
+            }
+
+            let batch = db.batch()
+
+            for document in documents {
+                batch.deleteDocument(document.reference)
+            }
+
+            batch.commit { error in
+                if let error = error {
+                    print("Error deleting trip forms: \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        }
+    }
+
+    private func resetNavigationStackToLoginView() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+
+        let loginView = LoginView().environmentObject(AuthViewModel())
+        let navigationController = UINavigationController(rootViewController: UIHostingController(rootView: loginView))
+
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
     }
 
     
