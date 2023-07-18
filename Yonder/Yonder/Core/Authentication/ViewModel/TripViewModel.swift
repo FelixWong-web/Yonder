@@ -43,3 +43,15 @@ func saveFormData(trip: String, arrivalDate: Date, leavingDate: Date) async thro
         throw error
     }
 }
+
+func isDateValid(date: Date) -> Bool {
+        let currentDate = Date()
+        return date >= currentDate
+    }
+
+func formatDate(_ date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    return formatter.string(from: date)
+}
+

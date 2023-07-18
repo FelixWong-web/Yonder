@@ -15,6 +15,7 @@ struct AddTripView: View {
     @State private var LeavingDate = Date()
     @State private var ListOfActivities = ""
     @State private var ListOfFriends = ""
+    @State private var tripAdded = false
     
     var body: some View {
         VStack{
@@ -45,6 +46,7 @@ struct AddTripView: View {
             Button {
                 Task {
                     try await saveFormData(trip: Trip, arrivalDate: ArrivalDate, leavingDate: LeavingDate)
+                    tripAdded = true
                 }
             } label: {
                 HStack{
@@ -58,6 +60,13 @@ struct AddTripView: View {
                 .cornerRadius(8)
                 .padding(.horizontal)
             }
+            .background(
+                        NavigationLink(
+                            destination: ProfileView(), // Navigate to ProfileView
+                            isActive: $tripAdded, // Use tripAdded to control the navigation
+                            label: { EmptyView() }
+                        )
+                    )
         }
     }
 }
@@ -71,11 +80,6 @@ extension AddTripView : AuthenticationFormProtocol{
         && !ListOfFriends.isEmpty
     }
 }
-
-private func isDateValid(date: Date) -> Bool {
-        let currentDate = Date()
-        return date >= currentDate
-    }
 
 struct AddTripView_Previews: PreviewProvider {
     static var previews: some View {
