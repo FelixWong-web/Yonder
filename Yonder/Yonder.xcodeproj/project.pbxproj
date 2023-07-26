@@ -25,6 +25,7 @@
 		7ED979BC2A266C43004945C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7ED979BB2A266C43004945C3 /* GoogleService-Info.plist */; };
 		7ED979BF2A2A501F004945C3 /* AddTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED979BE2A2A501F004945C3 /* AddTripView.swift */; };
 		7ED979C42A2A6910004945C3 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED979C32A2A6910004945C3 /* CalendarView.swift */; };
+		C93C86AA2A71A3B1006A3283 /* ProfileNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C86A92A71A3B1006A3283 /* ProfileNavigationLink.swift */; };
 		C967982B2A4B7259009F427A /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967982A2A4B7259009F427A /* TripViewModel.swift */; };
 		C967982D2A4E16F9009F427A /* TripFormListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967982C2A4E16F9009F427A /* TripFormListView.swift */; };
 		C967982F2A4E1844009F427A /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967982E2A4E1844009F427A /* TripView.swift */; };
@@ -47,6 +48,7 @@
 		7ED979BB2A266C43004945C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7ED979BE2A2A501F004945C3 /* AddTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripView.swift; sourceTree = "<group>"; };
 		7ED979C32A2A6910004945C3 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		C93C86A92A71A3B1006A3283 /* ProfileNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationLink.swift; sourceTree = "<group>"; };
 		C967982A2A4B7259009F427A /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
 		C967982C2A4E16F9009F427A /* TripFormListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripFormListView.swift; sourceTree = "<group>"; };
 		C967982E2A4E1844009F427A /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
@@ -131,7 +133,6 @@
 				7ED979A92A2666AF004945C3 /* Authentication */,
 				7ED979AA2A2666C6004945C3 /* Profile */,
 				7ED979A82A26664C004945C3 /* Root */,
-				7ED979BD2A2A4FB6004945C3 /* Trip */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -166,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				7ED979B52A26691D004945C3 /* ProfileView.swift */,
+				C93C86A92A71A3B1006A3283 /* ProfileNavigationLink.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -182,19 +184,12 @@
 		7ED979B22A266844004945C3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7ED979BE2A2A501F004945C3 /* AddTripView.swift */,
 				7ED979AB2A266704004945C3 /* LoginView.swift */,
 				7ED979B32A2668F4004945C3 /* RegistrationView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		7ED979BD2A2A4FB6004945C3 /* Trip */ = {
-			isa = PBXGroup;
-			children = (
-				7ED979BE2A2A501F004945C3 /* AddTripView.swift */,
 				C967982E2A4E1844009F427A /* TripView.swift */,
 			);
-			path = Trip;
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,6 +277,7 @@
 				7ED979BF2A2A501F004945C3 /* AddTripView.swift in Sources */,
 				C967982B2A4B7259009F427A /* TripViewModel.swift in Sources */,
 				7ED979C42A2A6910004945C3 /* CalendarView.swift in Sources */,
+				C93C86AA2A71A3B1006A3283 /* ProfileNavigationLink.swift in Sources */,
 				7ED979AE2A2667D2004945C3 /* InputView.swift in Sources */,
 				7ED979B02A26680C004945C3 /* SettingsRowView.swift in Sources */,
 				7ED979B42A2668F4004945C3 /* RegistrationView.swift in Sources */,
