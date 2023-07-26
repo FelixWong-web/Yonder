@@ -12,4 +12,5 @@ struct TripForm: Identifiable, Codable {
     var tripName: String // Name of the trip
     var arrivalDate: Date // Date of arrival
     var leavingDate: Date // Date of departure
+    var selectedCountry: String
 }

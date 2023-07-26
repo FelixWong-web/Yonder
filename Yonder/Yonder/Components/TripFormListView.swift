@@ -55,11 +55,11 @@ struct TripFormListView: View {
                 return
             }
             
-            print("Retrieved (documents.count) trip forms")
+            print("Retrieved \(documents.count) trip forms")
             
             let fetchedTripForms: [TripForm] = documents.compactMap { document in
                 let data = document.data()
-                print("Document data: (data)")
+                print("Document data: \(data)")
                 
                 guard let formData = data["formData"] as? [String: Any] else {
                     print("Invalid formData")
@@ -69,13 +69,14 @@ struct TripFormListView: View {
                 let tripName = formData["tripName"] as? String
                 let arrivalTimestamp = formData["arrivalDate"] as? Timestamp
                 let leavingTimestamp = formData["leavingDate"] as? Timestamp
+                let selectedCountry = formData["selectedCountry"] as? String // Fetch selected country
                 
                 let arrivalDate = arrivalTimestamp?.dateValue()
                 let leavingDate = leavingTimestamp?.dateValue()
                 
                 // Create a TripForm object if all necessary data is available
                 if let tripName = tripName, let arrivalDate = arrivalDate, let leavingDate = leavingDate {
-                    return TripForm(id: document.documentID, tripName: tripName, arrivalDate: arrivalDate, leavingDate: leavingDate)
+                    return TripForm(id: document.documentID, tripName: tripName, arrivalDate: arrivalDate, leavingDate: leavingDate, selectedCountry: selectedCountry ?? "")
                 } else {
                     return nil
                 }
@@ -89,37 +90,37 @@ struct TripFormListView: View {
             }
         }
     }
-}
-
-struct TripSidebarView: View {
-    let tripForm: TripForm
     
-    var body: some View {
-        VStack {
-            Spacer()
-            
-            // Customize the sidebar view for each trip
-            VStack(spacing: 8) {
-                Text(tripForm.tripName)
-                    .font(.title) // Adjust the font size as needed
-                    .foregroundColor(.white) // Change the text color to your desired color
+    struct TripSidebarView: View {
+        let tripForm: TripForm
+        
+        var body: some View {
+            VStack {
+                Spacer()
                 
-                Text(getYearFromDate(tripForm.arrivalDate))
-                    .font(.subheadline) // Adjust the font size as needed
-                    .foregroundColor(.white)
+                // Customize the sidebar view for each trip
+                VStack(spacing: 8) {
+                    Text(tripForm.selectedCountry)
+                        .font(.title) // Adjust the font size as needed
+                        .foregroundColor(.white) // Change the text color to your desired color
+                    
+                    Text(getYearFromDate(tripForm.arrivalDate))
+                        .font(.subheadline) // Adjust the font size as needed
+                        .foregroundColor(.white)
+                }
+                .padding()
+                .frame(width: 280, height: 250) // Adjust the width and height as needed
+                .background(Color.teal) // Change the background color to your desired color
+                .cornerRadius(8)
+                
+                Spacer()
             }
-            .padding()
-            .frame(width: 280, height: 250) // Adjust the width and height as needed
-            .background(Color.teal) // Change the background color to your desired color
-            .cornerRadius(8)
-            
-            Spacer()
         }
-    }
-    
-    private func getYearFromDate(_ date: Date) -> String {
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: date)
-        return String(year)
+        
+        private func getYearFromDate(_ date: Date) -> String {
+            let calendar = Calendar.current
+            let year = calendar.component(.year, from: date)
+            return String(year)
+        }
     }
 }
