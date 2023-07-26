@@ -10,9 +10,14 @@ import Firebase
 import FirebaseFirestoreSwift
 
 struct TripView: View {
-    let tripForm: TripForm
+    @State private var tripForm: TripForm
     @State private var tripDeleted = false
     @State private var showConfirmationAlert = false
+    @State private var isEditing = false
+    
+    init(tripForm: TripForm) {
+        self._tripForm = State(initialValue: tripForm)
+    }
     
     var body: some View {
         VStack(spacing: 16) {
@@ -33,45 +38,51 @@ struct TripView: View {
             
             Spacer()
             
+            Button(action: {
+                isEditing = true
+            }) {
+                Text("Edit")
+            }
+            
             Button {
-                showConfirmationAlert = true 
+                showConfirmationAlert = true
             } label: {
                 Text("Delete Trip")
                     .foregroundColor(.red)
             }
         }
         .padding()
-        .navigationTitle("Trip Details") // Set the navigation title
+        .navigationTitle("Trip Details")
         .background(
             NavigationStack {
                 NavigationLink(
-                    destination: ProfileView(), // Navigate to ProfileView when the trip is deleted
-                    isActive: $tripDeleted, // Use tripDeleted to control the navigation
+                    destination: ProfileView(),
+                    isActive: $tripDeleted,
                     label: { EmptyView() }
                 )
             }
         )
         .alert(isPresented: $showConfirmationAlert) {
-                    Alert(
-                        title: Text("Delete Trip"),
-                        message: Text("Are you sure you want to delete this trip?"),
-                        primaryButton: .cancel(),
-                        secondaryButton: .destructive(Text("Delete"), action: deleteTrip)
-                    )
-                }
+            Alert(
+                title: Text("Delete Trip"),
+                message: Text("Are you sure you want to delete this trip?"),
+                primaryButton: .cancel(),
+                secondaryButton: .destructive(Text("Delete"), action: deleteTrip)
+            )
+        }
+        .sheet(isPresented: $isEditing) {
+            EditTripView(tripForm: $tripForm)
+        }
     }
     
     private func deleteTrip() {
-        // Implement the code to delete the tripForm from Firebase or your data source
-        // For example, you can use Firestore to delete the document corresponding to the tripForm
-        
         let db = Firestore.firestore()
         db.collection("tripForms").document(tripForm.id).delete { error in
             if let error = error {
                 print("Error deleting trip: \(error.localizedDescription)")
             } else {
                 // Trip deletion successful
-                tripDeleted = true // Set the tripDeleted state to true to navigate back to ProfileView
+                tripDeleted = true
             }
         }
     }
