@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 
-func saveFormData(trip: String, arrivalDate: Date, leavingDate: Date) async throws {
+func saveFormData(trip: String, arrivalDate: Date, leavingDate: Date, selectedCountry: String) async throws {
     guard let userId = Auth.auth().currentUser?.uid else {
         return
     }
@@ -27,7 +27,8 @@ func saveFormData(trip: String, arrivalDate: Date, leavingDate: Date) async thro
     let formData: [String: Any] = [
         "tripName": trip,
         "arrivalDate": arrivalTimestamp,
-        "leavingDate": leavingTimestamp
+        "leavingDate": leavingTimestamp,
+        "selectedCountry": selectedCountry // Add the selected country here
     ]
 
     // Save the form data to Firestore
@@ -43,7 +44,6 @@ func saveFormData(trip: String, arrivalDate: Date, leavingDate: Date) async thro
         throw error
     }
 }
-
 func isDateValid(date: Date) -> Bool {
         let currentDate = Date()
         return date >= currentDate

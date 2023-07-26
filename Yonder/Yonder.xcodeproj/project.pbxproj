@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7ED3B4BC2A71BD68003AAD92 /* AllCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED3B4BB2A71BD68003AAD92 /* AllCountries.swift */; };
 		7ED9798D2A266413004945C3 /* YonderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9798C2A266413004945C3 /* YonderApp.swift */; };
 		7ED9798F2A266413004945C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9798E2A266413004945C3 /* ContentView.swift */; };
 		7ED979912A266414004945C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ED979902A266414004945C3 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7ED3B4BB2A71BD68003AAD92 /* AllCountries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCountries.swift; sourceTree = "<group>"; };
 		7ED979892A266413004945C3 /* Yonder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yonder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED9798C2A266413004945C3 /* YonderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YonderApp.swift; sourceTree = "<group>"; };
 		7ED9798E2A266413004945C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			children = (
 				7ED979B72A266971004945C3 /* User.swift */,
 				C96798322A5364BC009F427A /* TripForm.swift */,
+				7ED3B4BB2A71BD68003AAD92 /* AllCountries.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				7ED979BA2A2669AE004945C3 /* AuthViewModel.swift in Sources */,
 				C967982F2A4E1844009F427A /* TripView.swift in Sources */,
 				C96798332A5364BC009F427A /* TripForm.swift in Sources */,
+				7ED3B4BC2A71BD68003AAD92 /* AllCountries.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
