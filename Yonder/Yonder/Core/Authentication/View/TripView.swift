@@ -38,12 +38,6 @@ struct TripView: View {
             
             Spacer()
             
-            Button(action: {
-                isEditing = true
-            }) {
-                Text("Edit")
-            }
-            
             Button {
                 showConfirmationAlert = true
             } label: {
@@ -53,6 +47,15 @@ struct TripView: View {
         }
         .padding()
         .navigationTitle("Trip Details")
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isEditing = true
+                }) {
+                    Text("Edit")
+                }
+            }
+        }
         .background(
             NavigationStack {
                 NavigationLink(
