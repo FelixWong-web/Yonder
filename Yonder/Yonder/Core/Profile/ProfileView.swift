@@ -58,8 +58,10 @@
                                 SettingsRowView(imageName: "person.fill.xmark", title: "Delete Account", tintColor: .red)
                             }
                         }
-
                     }
+                    .navigationBarTitle("Profile", displayMode: .inline)
+                    .listStyle(InsetGroupedListStyle()) // Use InsetGroupedListStyle
+                                    .padding(.top, -35)
                 }
             }
         }
