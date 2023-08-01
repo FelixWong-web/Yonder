@@ -21,10 +21,6 @@ struct TripView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            Text("Trip Details")
-                .font(.title)
-                .fontWeight(.bold)
-            
             Text("Trip Name: \(tripForm.tripName)")
                 .font(.headline)
             
